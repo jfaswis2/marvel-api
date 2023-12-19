@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.jfas.marvelapi.dto.MyPageable;
 import com.jfas.marvelapi.persistence.integration.marvel.MarvelAPIConfig;
 import com.jfas.marvelapi.persistence.integration.marvel.dto.CharacterDto;
+import com.jfas.marvelapi.service.HttpClientService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -11,21 +12,22 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Repository
 public class CharacterRepository {
 
     private final MarvelAPIConfig marvelAPIConfig;
+    private final HttpClientService httpClientService;
     @Value("${integration.marvel.base-path}")
     private String basePath;
     private String characterPath;
 
-    public CharacterRepository(MarvelAPIConfig marvelAPIConfig) {
+    public CharacterRepository(MarvelAPIConfig marvelAPIConfig, HttpClientService httpClientService) {
         this.marvelAPIConfig = marvelAPIConfig;
+        this.httpClientService = httpClientService;
     }
+
 
     @PostConstruct
     private void setPath() {
@@ -73,7 +75,7 @@ public class CharacterRepository {
 
         List<String> stringArray = IntStream.of(array).boxed()
                 .map(Object::toString)
-                .toList();//TODO puede fallar
+                .toList();
 
         return String.join(",", stringArray);
     }
@@ -85,6 +87,6 @@ public class CharacterRepository {
 
         JsonNode response = httpClientService.doGet(finalUrl, marvelQueryParams, JsonNode.class);
 
-        return CharacterMapper.toDtoList().get(0);
+        return CharacterMapper.toDtoList(response).get(0);
     }
 }

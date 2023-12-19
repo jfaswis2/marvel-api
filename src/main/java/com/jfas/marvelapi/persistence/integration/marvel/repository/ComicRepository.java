@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.jfas.marvelapi.dto.MyPageable;
 import com.jfas.marvelapi.persistence.integration.marvel.MarvelAPIConfig;
 import com.jfas.marvelapi.persistence.integration.marvel.dto.ComicDto;
+import com.jfas.marvelapi.service.HttpClientService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -16,12 +17,14 @@ import java.util.Map;
 public class ComicRepository {
 
     private final MarvelAPIConfig marvelAPIConfig;
+    private final HttpClientService httpClientService;
     @Value("${integration.marvel.base-path}")
     private String basePath;
     private String comicPath;
 
-    public ComicRepository(MarvelAPIConfig marvelAPIConfig) {
+    public ComicRepository(MarvelAPIConfig marvelAPIConfig, HttpClientService httpClientService) {
         this.marvelAPIConfig = marvelAPIConfig;
+        this.httpClientService = httpClientService;
     }
 
     @PostConstruct
