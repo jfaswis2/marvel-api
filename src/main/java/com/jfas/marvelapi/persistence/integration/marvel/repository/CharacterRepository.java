@@ -2,6 +2,7 @@ package com.jfas.marvelapi.persistence.integration.marvel.repository;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jfas.marvelapi.dto.MyPageable;
+import com.jfas.marvelapi.persistence.integration.marvel.mapper.CharacterMapper;
 import com.jfas.marvelapi.persistence.integration.marvel.MarvelAPIConfig;
 import com.jfas.marvelapi.persistence.integration.marvel.dto.CharacterDto;
 import com.jfas.marvelapi.service.HttpClientService;
@@ -87,6 +88,6 @@ public class CharacterRepository {
 
         JsonNode response = httpClientService.doGet(finalUrl, marvelQueryParams, JsonNode.class);
 
-        return CharacterMapper.toDtoList(response).get(0);
+        return CharacterMapper.toInfoDtoList(response).get(0);
     }
 }
