@@ -19,7 +19,6 @@ public class WebSecurity {
         return http
                 .csrf(config -> config.disable())
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(config -> config.anyRequest().permitAll())
                 .build();
     }
 }
