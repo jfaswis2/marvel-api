@@ -28,7 +28,7 @@ public class ComicMapper {
 
         return new ComicDto(
                 comicNode.get("id").asLong(),
-                comicNode.get("tittle").asText(),
+                comicNode.get("title").asText(),
                 comicNode.get("description").asText(),
                 comicNode.get("modified").asText(),
                 comicNode.get("resourceURI").asText(),
