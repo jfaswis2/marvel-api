@@ -22,11 +22,13 @@ public class AuthenticationService {
     private final HttpSecurity http;
     private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public AuthenticationService(HttpSecurity http, UserDetailsService userDetailsService, AuthenticationManager authenticationManager) {
+    public AuthenticationService(HttpSecurity http, UserDetailsService userDetailsService, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.http = http;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
 
