@@ -1,11 +1,12 @@
 package com.jfas.marvelapi.persistence.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
 @Entity
-public class Role{
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +41,16 @@ public class Role{
     public void setPermissions(List<GrantedPermission> permissions) {
         this.permissions = permissions;
     }
+
+    @Override
+    public String getAuthority() {
+        if (name == null) {
+            return null;
+        }
+        return "ROLE_" + name.name();
+    }
+
+
 
     public static enum RoleEnum{
         CUSTOMER, AUDITOR;
